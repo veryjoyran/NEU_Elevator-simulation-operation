@@ -1,38 +1,11 @@
-#include <iostream>
-#include <cstdlib>
-#include "list.h"
+#include "list_basic.h"
 using namespace std;
 
 typedef int DataType;
 #define ElemType Node
-//定义链表结点
-class Node {
-public:
-    DataType data;
-    Node *next;
-    Node(DataType d = 0, Node* n = NULL) : data(d), next(n) {} // 构造函数
-};
 
-//初始化链表
-class LinkList {
-public:
-    LinkList();                      //构建一个空链表
-    ~LinkList();                     //销毁链表
-    void CreateLinkList(int n);      //创建一个链表
-    void TravalLinkList();           //遍历链表
-    int GetLength();                 //获取链表长度
-    bool IsEmpty();                  //判断链表是否为空
-    Node* FindNode(DataType data);   //查找节点
-    void InsertElemAtEnd(DataType data);            //在尾部插入元素
-    void InsertElemAtIndex(DataType data, int n);   //在指定位置插入元素
-    void InsertElemAtHead(DataType data);           //在头部插入元素
-    void DeleteElemAtEnd();          //在尾部删除元素
-    void DeleteAll();                //删除所有元素
-    void DeleteElemAtPoint(DataType data);          //删除指定元素
-    void DeleteElemAtHead();         //在头部删除元素
-private:
-    Node* head;                      //头结点
-};
+// Node 类构造函数实现
+Node::Node(DataType d, Node* n) : data(d), next(n) {}
 
 
 //初始化单链表
@@ -292,7 +265,7 @@ int main()
             break;
         case 5:
             DataType data;
-            cout << "请输入要获取节点的值: ";
+            cout << "请输入要获取节点的位置: ";
             cin >> data;
             cout << "该节点的值为" << l.FindNode(data)->data << endl;
             break;
