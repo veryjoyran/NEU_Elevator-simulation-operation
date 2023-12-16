@@ -4,6 +4,7 @@ using namespace std;
 typedef int DataType;
 #define ElemType Node
 
+
 // Node 类构造函数实现
 Node::Node(DataType d, Node* n) : data(d), next(n) {}
 
@@ -28,6 +29,7 @@ void LinkList::CreateLinkList(int n)
 {
     ElemType *pnew, *ptemp;
     ptemp = head;
+    head->data = n;         //将头结点的数据域定义为n
     if (n < 0) {       //当输入的值有误时，处理异常
         cout << "输入的节点个数有误" << endl;
         exit(EXIT_FAILURE);
@@ -59,14 +61,7 @@ void LinkList::TravalLinkList()
 //获取单链表的长度
 int LinkList::GetLength()
 {
-    int count = 0;                  //定义count计数
-    ElemType *p = head->next;           //定义p指向头结点
-    while (p != NULL)                //当指针的下一个地址不为空时，count+1
-    {
-        count++;                  
-        p = p->next;                //p指向p的下一个地址
-    }
-    return count;                   //返回count的数据
+   return head->data;
 }
  
 //判断单链表是否为空
@@ -79,24 +74,26 @@ bool LinkList::IsEmpty()
 }
  
 //查找节点
-ElemType * LinkList::FindNode(DataType data)
+DataType LinkList::FindNodePosition(DataType data)
 {
     ElemType * p = head;
     if (p == NULL) {                           //当为空表时，报异常
         cout << "此链表为空链表" << endl;
-        return NULL;
+        return -1;
     }
-    else
-    {
-        while (p->next != NULL)               //循环每一个节点
+    else{
+        int count = 0;
+        while (p->next != NULL)                //当指针的下一个地址不为空时，循环输出p的数据域
         {
-            if (p->data == data) {
-                return p;                     //返回指针域
+            p = p->next;                       //p指向p的下一个地址
+            count++;
+            if (p->data == data) {             //当p的数据域等于data时，返回count
+                return count;
             }
-            p = p->next;
         }
-        return NULL;                           //未查询到结果
+        return -1;
     }
+
 }
  
 //在尾部插入指定的元素
@@ -117,6 +114,7 @@ void LinkList::InsertElemAtEnd(DataType data)
         }
         p->next = newNode;
     }
+    head->data++;                 //头结点的数据域加1
 }
  
 //在指定位置插入指定元素
@@ -138,6 +136,7 @@ void LinkList::InsertElemAtIndex(DataType data,int n)
         ptemp->next = p->next;                 //将新节点插入到指定位置
         p->next = ptemp;
     }
+    head->data++;                              //头结点的数据域加1
 }
  
 //在头部插入指定元素
@@ -151,6 +150,7 @@ void LinkList::InsertElemAtHead(DataType data)
     }
     newNode->next = p->next;          //将新节点插入到指定位置
     p->next = newNode;
+    head->data++;                 //头结点的数据域加1
 }
  
 //在尾部删除元素
@@ -172,6 +172,7 @@ void LinkList::DeleteElemAtEnd()
         p = NULL;
         ptemp->next = NULL;
     }
+    head->data--;               //头结点的数据域减1
 }
  
 //删除所有数据
@@ -188,26 +189,30 @@ void LinkList::DeleteAll()
         delete ptemp;
     }
     head->next = NULL;                 //头结点的下一个节点指向NULL
+    head->data = 0;                    //头结点的数据域为0
 }
  
 //删除指定的数据
 void LinkList::DeleteElemAtPoint(DataType data)
 {
-    ElemType * ptemp = FindNode(data);    //查找到指定数据的节点位置
-    if (ptemp == head->next) {        //判断是不是头结点的下一个节点，如果是就从头部删了它
-        DeleteElemAtHead();
+    int temp = FindNodePosition(data);    //查找到指定数据的节点位置
+    if (temp == -1) {                     //当查找不到时，报异常
+        cout << "没有该节点" << endl;
     }
     else
     {
-        ElemType * p = head;          //p指向头结点
-        while (p->next != ptemp)      //p循环到指定位置的前一个节点
+        ElemType * p = head;              //创建一个指针指向头结点
+        ElemType * ptemp = NULL;          //创建一个占位节点
+        for (int i = 0; i < temp; i++)    //循环到指定的位置
         {
-            p = p->next;
+            ptemp = p;                    //将ptemp指向指定位置的前一个节点
+            p = p->next;                  //p指向指定位置的节点
         }
-        p->next = ptemp->next;         //删除指定位置的节点
-        delete ptemp;
-        ptemp = NULL;               
+        ptemp->next = p->next;            //将指定位置的前一个节点指向指定位置的下一个节点
+        delete p;                         //删除指定位置的节点
+        p = NULL;
     }
+    head->data--;                         //头结点的数据域减1
  
 }
  
@@ -227,6 +232,7 @@ void LinkList::DeleteElemAtHead()
         p = NULL;
         head->next = ptemp;           //头结点的指针更换
     }
+    head->data--;                     //头结点的数据域减1
 }
  
 //测试函数
@@ -265,9 +271,9 @@ int main()
             break;
         case 5:
             DataType data;
-            cout << "请输入要获取节点的位置: ";
+            cout << "请输入要获取节点: ";
             cin >> data;
-            cout << "该节点的值为" << l.FindNode(data)->data << endl;
+            cout << "该节点的位置为" << l.FindNodePosition(data) << endl;
             break;
         case 6:
             DataType endData;

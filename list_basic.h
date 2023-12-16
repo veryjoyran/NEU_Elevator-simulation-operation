@@ -25,7 +25,7 @@ public:
     void TravalLinkList();           
     int GetLength();                 
     bool IsEmpty();                  
-    Node* FindNode(DataType data);   
+    int FindNodePosition(DataType data);   
     void InsertElemAtEnd(DataType data);            
     void InsertElemAtIndex(DataType data, int n);   
     void InsertElemAtHead(DataType data);           
