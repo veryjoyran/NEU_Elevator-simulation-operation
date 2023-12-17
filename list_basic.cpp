@@ -1,33 +1,28 @@
 #include "list_basic.h"
 using namespace std;
 
-typedef int DataType;
-#define ElemType Node
-
-
-// Node 类构造函数实现
-Node::Node(DataType d, Node* n) : data(d), next(n) {}
-
-
 //初始化单链表
-LinkList::LinkList()                  
+template <typename DataType>
+LinkList<DataType>::LinkList()                  
 {
-    head = new ElemType;            
+    head = new Node;            
     head->data = 0;               //将头结点的数据域定义为0
-    head->next = NULL;            //头结点的下一个定义为NULL
+    head->next = nullptr;            //头结点的下一个定义为NULL
 }     
  
 // 析构函数
-LinkList::~LinkList() {
+template <typename DataType>
+LinkList<DataType>::~LinkList() {
     DeleteAll(); // 删除所有节点
     delete head; // 最后删除头结点
 }
 
  
 //创建一个单链表
-void LinkList::CreateLinkList(int n)
+template <typename DataType>
+void LinkList<DataType>::CreateLinkList(int n)
 {
-    ElemType *pnew, *ptemp;
+    Node *pnew, *ptemp;
     ptemp = head;
     head->data = n;         //将头结点的数据域定义为n
     if (n < 0) {       //当输入的值有误时，处理异常
@@ -35,7 +30,7 @@ void LinkList::CreateLinkList(int n)
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < n;i++) {        //将值一个一个插入单链表中
-        pnew = new ElemType;
+        pnew = new Node;
         cout << "请输入第" << i + 1 << "个值: " ;
         cin >> pnew->data;
         pnew->next = NULL;          //新节点的下一个地址为NULL
@@ -45,12 +40,13 @@ void LinkList::CreateLinkList(int n)
 }
  
 //遍历单链表
-void LinkList::TravalLinkList()
+template <typename DataType>
+void LinkList<DataType>::TravalLinkList()
 {
     if (head == NULL || head->next ==NULL) {
         cout << "链表为空表" << endl;
     }
-    ElemType *p = head;                 //另指针指向头结点
+    Node *p = head;                 //另指针指向头结点
     while (p->next != NULL)        //当指针的下一个地址不为空时，循环输出p的数据域
     {
         p = p->next;               //p指向p的下一个地址
@@ -59,13 +55,15 @@ void LinkList::TravalLinkList()
 }
  
 //获取单链表的长度
-int LinkList::GetLength()
+template <typename DataType>
+int LinkList<DataType>::GetLength()
 {
    return head->data;
 }
  
 //判断单链表是否为空
-bool LinkList::IsEmpty()
+template <typename DataType>
+bool LinkList<DataType>::IsEmpty()
 {
     if (head->next == NULL) {                 
         return true;
@@ -74,9 +72,10 @@ bool LinkList::IsEmpty()
 }
  
 //查找节点
-DataType LinkList::FindNodePosition(DataType data)
+template <typename DataType>
+int LinkList<DataType>::FindNodePosition(DataType data)
 {
-    ElemType * p = head;
+    Node * p = head;
     if (p == NULL) {                           //当为空表时，报异常
         cout << "此链表为空链表" << endl;
         return -1;
@@ -97,12 +96,13 @@ DataType LinkList::FindNodePosition(DataType data)
 }
  
 //在尾部插入指定的元素
-void LinkList::InsertElemAtEnd(DataType data)
+template <typename DataType>
+void LinkList<DataType>::InsertElemAtEnd(DataType data)
 {
-    ElemType * newNode = new ElemType;    //定义一个Node结点指针newNode
+    Node * newNode = new Node;    //定义一个Node结点指针newNode
     newNode->next = NULL;         //定义newNode的数据域和指针域
     newNode->data = data;
-    ElemType * p = head;              //定义指针p指向头结点
+    Node * p = head;              //定义指针p指向头结点
     if (head == NULL) {           //当头结点为空时，设置newNode为头结点
         head = newNode;
     }
@@ -118,15 +118,16 @@ void LinkList::InsertElemAtEnd(DataType data)
 }
  
 //在指定位置插入指定元素
-void LinkList::InsertElemAtIndex(DataType data,int n)
+template <typename DataType>
+void LinkList<DataType>::InsertElemAtIndex(DataType data,int n)
 {
     if (n<1 || n>GetLength())                   //输入有误报异常
         cout << "输入的值错误" << endl;
     else
     {
-        ElemType * ptemp = new ElemType;        //创建一个新的节点
+        Node * ptemp = new Node;        //创建一个新的节点
         ptemp->data = data;                     //定义数据域
-        ElemType * p = head;                    //创建一个指针指向头结点
+        Node * p = head;                    //创建一个指针指向头结点
         int i = 1;
         while (n > i)                           //遍历到指定的位置
         {
@@ -140,11 +141,12 @@ void LinkList::InsertElemAtIndex(DataType data,int n)
 }
  
 //在头部插入指定元素
-void LinkList::InsertElemAtHead(DataType data)
+template <typename DataType>
+void LinkList<DataType>::InsertElemAtHead(DataType data)
 {
-    ElemType * newNode = new ElemType;    //定义一个Node结点指针newNode
+    Node * newNode = new Node;    //定义一个Node结点指针newNode
     newNode->data = data;
-    ElemType * p = head;              //定义指针p指向头结点
+    Node * p = head;              //定义指针p指向头结点
     if (head == NULL) {           //当头结点为空时，设置newNode为头结点
         head = newNode;
     }
@@ -154,10 +156,11 @@ void LinkList::InsertElemAtHead(DataType data)
 }
  
 //在尾部删除元素
-void LinkList::DeleteElemAtEnd()
+template <typename DataType>
+void LinkList<DataType>::DeleteElemAtEnd()
 {
-    ElemType * p = head;          //创建一个指针指向头结点
-    ElemType * ptemp = NULL;      //创建一个占位节点
+    Node * p = head;          //创建一个指针指向头结点
+    Node * ptemp = NULL;      //创建一个占位节点
     if (p->next == NULL) {        //判断链表是否为空
         cout << "单链表空" << endl;
     }
@@ -176,10 +179,11 @@ void LinkList::DeleteElemAtEnd()
 }
  
 //删除所有数据
-void LinkList::DeleteAll()
+template <typename DataType>
+void LinkList<DataType>::DeleteAll()
 {
-    ElemType * p = head->next;
-    ElemType * ptemp = new ElemType;
+    Node * p = head->next;
+    Node * ptemp = new Node;
     while (p != NULL)                    //在头结点的下一个节点逐个删除节点
     {
         ptemp = p;
@@ -193,7 +197,8 @@ void LinkList::DeleteAll()
 }
  
 //删除指定的数据
-void LinkList::DeleteElemAtPoint(DataType data)
+template <typename DataType>
+void LinkList<DataType>::DeleteElemAtPoint(DataType data)
 {
     int temp = FindNodePosition(data);    //查找到指定数据的节点位置
     if (temp == -1) {                     //当查找不到时，报异常
@@ -201,8 +206,8 @@ void LinkList::DeleteElemAtPoint(DataType data)
     }
     else
     {
-        ElemType * p = head;              //创建一个指针指向头结点
-        ElemType * ptemp = NULL;          //创建一个占位节点
+        Node * p = head;              //创建一个指针指向头结点
+        Node * ptemp = NULL;          //创建一个占位节点
         for (int i = 0; i < temp; i++)    //循环到指定的位置
         {
             ptemp = p;                    //将ptemp指向指定位置的前一个节点
@@ -217,15 +222,16 @@ void LinkList::DeleteElemAtPoint(DataType data)
 }
  
 //在头部删除节点
-void LinkList::DeleteElemAtHead()
+template <typename DataType>
+void LinkList<DataType>::DeleteElemAtHead()
 {
-    ElemType * p = head;
+    Node * p = head;
     if (p == NULL || p->next == NULL) {   //判断是否为空表，报异常
         cout << "该链表为空表" << endl;
     }
     else
     {
-        ElemType * ptemp = NULL;      //创建一个占位节点
+        Node * ptemp = NULL;      //创建一个占位节点
         p = p->next;
         ptemp = p->next;              //将头结点的下下个节点指向占位节点
         delete p;                     //删除头结点的下一个节点
@@ -238,7 +244,7 @@ void LinkList::DeleteElemAtHead()
 //测试函数
 int main()
 {
-    LinkList l;
+    LinkList<int> l;
     int i;
     cout << "1.创建单链表   2.遍历单链表   3.获取单链表的长度   4.判断单链表是否为空   5.获取节点\n";
     cout << "6.在尾部插入指定元素   7.在指定位置插入指定元素   8.在头部插入指定元素\n";
@@ -270,19 +276,19 @@ int main()
             }
             break;
         case 5:
-            DataType data;
+            int data;
             cout << "请输入要获取节点: ";
             cin >> data;
             cout << "该节点的位置为" << l.FindNodePosition(data) << endl;
             break;
         case 6:
-            DataType endData;
+            int endData;
             cout << "请输入要在尾部插入的值: ";
             cin >> endData;
             l.InsertElemAtEnd(endData);
             break;
         case 7:
-            DataType pointData;
+            int pointData;
             int index;
             cout << "请输入要插入的数据: ";
             cin >> pointData;
@@ -291,7 +297,7 @@ int main()
             l.InsertElemAtIndex(pointData, index);
             break;
         case 8:
-            DataType headData;
+            int headData;
             cout << "请输入要在头部插入的值: ";
             cin >> headData;
             l.InsertElemAtHead(headData);
@@ -303,7 +309,7 @@ int main()
             l.DeleteAll();
             break;
         case 11:
-            DataType pointDeleteData;
+            int pointDeleteData;
             cout << "请输入要删除的数据: ";
             cin >> pointDeleteData;
             l.DeleteElemAtPoint(pointDeleteData);

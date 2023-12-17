@@ -3,24 +3,13 @@
 
 #include <iostream>
 #include <cstdlib>
-typedef int DataType;
-
-// 前向声明
-class Node;
-
-// 定义链表节点类
-class Node {
-public:
-    DataType data;
-    Node *next;
-    Node(DataType d = 0, Node* n = NULL);
-};
 
 // 定义链表类
+template <typename DataType>
 class LinkList {
 public:
     LinkList();                      
-    ~LinkList();                     
+    ~LinkList();                       
     void CreateLinkList(int n);      
     void TravalLinkList();           
     int GetLength();                 
@@ -34,6 +23,13 @@ public:
     void DeleteElemAtPoint(DataType data);          
     void DeleteElemAtHead();         
 private:
+    class Node {
+    public:
+        DataType data = {};
+        Node *next = nullptr;
+        Node() = default;
+    };
+    
     Node* head;                      
 };
 
