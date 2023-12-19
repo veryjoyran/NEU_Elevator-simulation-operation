@@ -95,6 +95,7 @@ int LinkList<DataType>::FindNodePosition(DataType data)
 
 }
  
+
 //在尾部插入指定的元素
 template <typename DataType>
 void LinkList<DataType>::InsertElemAtEnd(DataType data)
@@ -240,7 +241,52 @@ void LinkList<DataType>::DeleteElemAtHead()
     }
     head->data--;                     //头结点的数据域减1
 }
+
+//获取指定位置的数据
+template <typename DataType>
+DataType LinkList<DataType>::GetElemAtIndex(int n)
+{
+    Node * p = head;
+    if (p == NULL) {                           //当为空表时，报异常
+        cout << "此链表为空链表" << endl;
+        return -1;
+    }
+    else{
+        int count = 0;
+        while (p->next != NULL)                //当指针的下一个地址不为空时，循环输出p的数据域
+        {
+            p = p->next;                       //p指向p的下一个地址
+            count++;
+            if (count == n) {             //当p的数据域等于data时，返回count
+                return p->data;
+            }
+        }
+        return -1;
+    }
+}
+
+//设置指定位置的数据
+template <typename DataType>
+void LinkList<DataType>::SetElemAtIndex(int n, DataType data)
+{
+    Node * p = head;
+    if (p == NULL) {                           //当为空表时，报异常
+        cout << "此链表为空链表" << endl;
+    }
+    else{
+        int count = 0;
+        while (p->next != NULL)                //当指针的下一个地址不为空时，循环输出p的数据域
+        {
+            p = p->next;                       //p指向p的下一个地址
+            count++;
+            if (count == n) {             //当p的数据域等于data时，返回count
+                p->data=data;
+            }
+        }
+    }
+}
  
+ /**/
 //测试函数
 int main()
 {
@@ -248,7 +294,7 @@ int main()
     int i;
     cout << "1.创建单链表   2.遍历单链表   3.获取单链表的长度   4.判断单链表是否为空   5.获取节点\n";
     cout << "6.在尾部插入指定元素   7.在指定位置插入指定元素   8.在头部插入指定元素\n";
-    cout<<"9.在尾部删除元素   10.删除所有元素   11.删除指定元素   12.在头部删除元素   0.退出" << endl;
+    cout<<"9.在尾部删除元素   10.删除所有元素   11.删除指定元素   12.在头部删除元素  13.获取指定下标的数据  14. 设置指定下标的数据 0.退出" << endl;
     do
     {
         cout << "请输入要执行的操作: ";
@@ -316,6 +362,21 @@ int main()
             break;
         case 12:
             l.DeleteElemAtHead();
+            break;
+        case 13:
+            int indexData;
+            cout << "请输入要获取的下标: ";
+            cin >> indexData;
+            cout << "该下标的数据为" << l.GetElemAtIndex(indexData) << endl;
+            break;
+        case 14:
+            int indexSetData;
+            int setData;
+            cout << "请输入要设置的下标: ";
+            cin >> indexSetData;
+            cout << "请输入要设置的数据: ";
+            cin >> setData;
+            l.SetElemAtIndex(indexSetData,setData);
             break;
         default:
             break;

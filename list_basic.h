@@ -22,6 +22,8 @@ public:
     void DeleteAll();                
     void DeleteElemAtPoint(DataType data);          
     void DeleteElemAtHead();         
+    DataType GetElemAtIndex(int n);
+    void SetElemAtIndex(int n, DataType data);
 private:
     class Node {
     public:
