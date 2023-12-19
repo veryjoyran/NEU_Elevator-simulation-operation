@@ -28,6 +28,7 @@ private:
     class Node {
     public:
         DataType data = {};
+        int dataposition = 0;
         Node *next = nullptr;
         Node() = default;
     };
@@ -40,7 +41,7 @@ template <typename DataType>
 LinkList<DataType>::LinkList()                  
 {
     head = new Node;            
-    head->data = 0;               //将头结点的数据域定义为0
+    head->dataposition = 0;               //将头结点的数据域定义为0
     head->next = nullptr;            //头结点的下一个定义为NULL
 }     
  
@@ -92,7 +93,14 @@ void LinkList<DataType>::TravalLinkList()
 template <typename DataType>
 int LinkList<DataType>::GetLength()
 {
-   return head->data;
+   int count=0;
+    Node *p=head;
+    while(p->next!=NULL)        //当指针的下一个地址不为空时，循环输出p的数据域
+    {
+        p=p->next;              //p指向p的下一个地址
+        count++;
+    }
+    return count;
 }
  
 //判断单链表是否为空
@@ -149,7 +157,6 @@ void LinkList<DataType>::InsertElemAtEnd(DataType data)
         }
         p->next = newNode;
     }
-    head->data++;                 //头结点的数据域加1
 }
  
 //在指定位置插入指定元素
@@ -172,7 +179,6 @@ void LinkList<DataType>::InsertElemAtIndex(DataType data,int n)
         ptemp->next = p->next;                 //将新节点插入到指定位置
         p->next = ptemp;
     }
-    head->data++;                              //头结点的数据域加1
 }
  
 //在头部插入指定元素
@@ -187,7 +193,6 @@ void LinkList<DataType>::InsertElemAtHead(DataType data)
     }
     newNode->next = p->next;          //将新节点插入到指定位置
     p->next = newNode;
-    head->data++;                 //头结点的数据域加1
 }
  
 //在尾部删除元素
@@ -210,7 +215,6 @@ void LinkList<DataType>::DeleteElemAtEnd()
         p = NULL;
         ptemp->next = NULL;
     }
-    head->data--;               //头结点的数据域减1
 }
  
 //删除所有数据
@@ -228,7 +232,6 @@ void LinkList<DataType>::DeleteAll()
         delete ptemp;
     }
     head->next = NULL;                 //头结点的下一个节点指向NULL
-    head->data = 0;                    //头结点的数据域为0
 }
  
 //删除指定的数据
@@ -252,7 +255,6 @@ void LinkList<DataType>::DeleteElemAtPoint(DataType data)
         delete p;                         //删除指定位置的节点
         p = NULL;
     }
-    head->data--;                         //头结点的数据域减1
  
 }
  
@@ -273,29 +275,25 @@ void LinkList<DataType>::DeleteElemAtHead()
         p = NULL;
         head->next = ptemp;           //头结点的指针更换
     }
-    head->data--;                     //头结点的数据域减1
 }
 
 //获取指定位置的数据
 template <typename DataType>
-DataType LinkList<DataType>::GetElemAtIndex(int n)
-{
-    Node * p = head;
-    if (p == NULL) {                           //当为空表时，报异常
-        cout << "此链表为空链表" << endl;
-        return -1;
-    }
-    else{
+DataType LinkList<DataType>::GetElemAtIndex(int n) {
+    Node *p = head;
+    if (p == NULL || p->next == NULL) { // 当链表为空时
+        throw std::out_of_range("链表为空");
+    } else {
         int count = 0;
-        while (p->next != NULL)                //当指针的下一个地址不为空时，循环输出p的数据域
-        {
-            p = p->next;                       //p指向p的下一个地址
+        p = p->next; // 开始于第一个实际元素
+        while (p != NULL) {
             count++;
-            if (count == n) {             //当p的数据域等于data时，返回count
+            if (count == n) {
                 return p->data;
             }
+            p = p->next;
         }
-        return -1;
+        throw std::out_of_range("索引超出范围");
     }
 }
 
