@@ -258,24 +258,17 @@ void LinkList<DataType>::DeleteElemAtPoint(DataType data)
  
 }
  
-//在头部删除节点
 template <typename DataType>
-void LinkList<DataType>::DeleteElemAtHead()
-{
-    Node * p = head;
-    if (p == NULL || p->next == NULL) {   //判断是否为空表，报异常
-        cout << "该链表为空表" << endl;
-    }
-    else
-    {
-        Node * ptemp = NULL;      //创建一个占位节点
-        p = p->next;
-        ptemp = p->next;              //将头结点的下下个节点指向占位节点
-        delete p;                     //删除头结点的下一个节点
-        p = NULL;
-        head->next = ptemp;           //头结点的指针更换
+void LinkList<DataType>::DeleteElemAtHead() {
+    if (head == NULL || head->next == NULL) { // 如果链表为空或仅有头节点
+        cout << "该链表为空表或仅有头节点，无法删除" << endl;
+    } else {
+        Node *p = head->next; // 指向要删除的节点
+        head->next = p->next; // 更新头结点的 next 指针
+        delete p;             // 删除节点
     }
 }
+
 
 //获取指定位置的数据
 template <typename DataType>

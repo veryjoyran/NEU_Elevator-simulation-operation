@@ -82,7 +82,7 @@ int Calling::GetTargetfloorNum() {
     return TargetfloorNum;
 }
 
-int Calling::GetElemAtIndex(int index) {
+int Calling::CallingGetElemAtIndex(int index) {
     return this->GetElemAtIndex(index);
 }
 

@@ -1,10 +1,12 @@
 #ifndef ELEVAOTR_H
 #define ELEVAOTR_H
+
 #define MAXPEOPLE 12
 #define MaxFloor 14
 #include "list_basic.h"
 #include "people.h"
 #include "floor.h"
+#include "calling.h"
 class Elevator {
 public:
     Elevator();
@@ -15,7 +17,7 @@ public:
     int GetState();
     void SetPeopleNum(int peopleNum);
     int GetPeopleNum();
-    int getDirection();
+    int getDirection(Calling &calling,int currentFloor);
     void setDirection(int direction);
     People* GetTargetFloor();
 

@@ -11,7 +11,7 @@ public:
     void sortedTargetFloor(int currentFloor,int direction);
     void CallingTravel();
     int GetTargetfloorNum();
-    int GetElemAtIndex(int index);
+    int CallingGetElemAtIndex(int index);
 private:
     int TargetfloorNum;
 };

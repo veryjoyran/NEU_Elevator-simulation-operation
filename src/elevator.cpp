@@ -1,4 +1,5 @@
 #include "elevator.h"
+#include "calling.h"
 using namespace std;
 
 Elevator::Elevator() {
@@ -51,11 +52,14 @@ void Elevator::deletePeople(People* TargetFloor) {
     peopleNum--;
 }
 
-int Elevator::getDirection() {
-    if(currentFloor>TargetFloor[0].GetTargetFloor()){
+int Elevator::getDirection(Calling &calling,int currentFloor) {
+    if(calling.CallingGetElemAtIndex(1)==0){
+        return 0;
+    }
+    else if(currentFloor>calling.CallingGetElemAtIndex(1)){
         return 2;
     }
-    else if(currentFloor<TargetFloor[0].GetTargetFloor()){
+    else if(currentFloor<calling.CallingGetElemAtIndex(1)){
         return 1;
     }
     else{
@@ -64,7 +68,7 @@ int Elevator::getDirection() {
 }
 
 void Elevator::setDirection(int direction) {
-    this->direction=100;
+    this->direction=direction;
 }
 
 void Elevator::sortedTargetFloor(int currentFloor,int direction,People* TargetFloor) {

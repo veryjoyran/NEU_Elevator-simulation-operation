@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/output/main", // 移动到这里
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "preLaunchTask": "build",
+            "linux": {
+                "miDebuggerPath": "gdb"
+            },
+            "osx": {
+                "miDebuggerPath": "lldb-mi"
+            },
+            "windows": {
+                "miDebuggerPath": "gdb.exe"
+            }
+        }
+    ]
+}
