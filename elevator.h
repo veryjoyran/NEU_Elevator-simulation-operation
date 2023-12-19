@@ -22,7 +22,7 @@ public:
     void addPeople(People people,People* TargetFloor); //添加乘客
     void deletePeople(People* TargetFloor); //删除乘客
     void sortedTargetFloor(int currentFloor,int direction,People* TargetFloor);
-    void SetIntTargetFloor(Floor floor[14]);
+
 
 
 
@@ -31,7 +31,7 @@ private:
     int state;     //0表示电梯静止，1表示电梯上升，2表示电梯下降
     int peopleNum;
     int direction; //1表示电梯上升，2表示电梯下降
-    People TargetFloor[14];
+    People TargetFloor[MAXPEOPLE];
 
 };
 
