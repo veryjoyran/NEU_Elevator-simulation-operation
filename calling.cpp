@@ -78,6 +78,14 @@ void Calling::CallingTravel() {
     this->TravalLinkList();
 }
 
+int Calling::GetTargetfloorNum() {
+    return TargetfloorNum;
+}
+
+int Calling::GetElemAtIndex(int index) {
+    return this->GetElemAtIndex(index);
+}
+
 /*
 int main(){
 
