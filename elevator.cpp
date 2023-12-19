@@ -63,6 +63,10 @@ int Elevator::getDirection() {
     }
 }
 
+void Elevator::setDirection(int direction) {
+    this->direction=100;
+}
+
 void Elevator::sortedTargetFloor(int currentFloor,int direction,People* TargetFloor) {
     People temp;
 

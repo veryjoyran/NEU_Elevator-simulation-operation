@@ -16,6 +16,7 @@ public:
     void SetPeopleNum(int peopleNum);
     int GetPeopleNum();
     int getDirection();
+    void setDirection(int direction);
     People* GetTargetFloor();
 
 
