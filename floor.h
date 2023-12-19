@@ -11,8 +11,9 @@ public:
     ~Floor();
     void SetFloorNum(int floorNum);
     int GetFloorNum();
+    int getPeopleNum();
     void pushPeople(People people);
-    void popPeople();
+    People popPeople();
 
 private:
     int floorNum;

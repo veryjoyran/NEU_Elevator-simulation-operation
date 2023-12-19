@@ -14,12 +14,21 @@ int Floor::GetFloorNum() {
     return floorNum;
 }
 
+int Floor::getPeopleNum() {
+    return peopleNum;
+}
+
 void Floor::pushPeople(People people) {
     this->InsertElemAtEnd(people);
     peopleNum++;
 }
 
-void Floor::popPeople() {
-    this->DeleteElemAtEnd();
+People Floor::popPeople() {
+    People temp=GetElemAtIndex(1);
+    this->DeleteElemAtHead();
     peopleNum--;
+    return temp;
 }
+
+
+
