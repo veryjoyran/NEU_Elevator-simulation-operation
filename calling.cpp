@@ -33,7 +33,7 @@ void Calling::sortedTargetFloor(int currentFloor,int direction) {
                 }
             }
         }
-        CallingTravel();
+
         for(int i=1;i<TargetfloorNum;i++){
             for(int j=1;j<TargetfloorNum-i+1;j++){
                 if(GetElemAtIndex(j)>currentFloor&&GetElemAtIndex(j+1)>currentFloor){
@@ -58,7 +58,7 @@ void Calling::sortedTargetFloor(int currentFloor,int direction) {
                 }
             }
         }
-        CallingTravel();
+
         for(int i=1;i<TargetfloorNum;i++){
             for(int j=1;j<TargetfloorNum-i+1;j++){
                 if(GetElemAtIndex(j)<currentFloor&&GetElemAtIndex(j+1)<currentFloor){
@@ -78,6 +78,7 @@ void Calling::CallingTravel() {
     this->TravalLinkList();
 }
 
+/*
 int main(){
 
     Calling calling;
@@ -94,3 +95,4 @@ int main(){
 
     return 0;
 }
+*/
