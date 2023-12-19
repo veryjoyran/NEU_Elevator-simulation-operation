@@ -8,6 +8,7 @@ using std::string;
 
 class People {
 public:
+    People()=default;
     People(string id, int ReachTime);
     ~People();
     string GetId();
