@@ -1,17 +1,75 @@
 #include "elevator.h"
 #include "floor.h"
 #include "people.h"
+#include "calling.h"
 #include <iostream>
 using namespace std;
 
-void elevatorRun(Elevator elevator,Floor floor[14]){
+void elevatorRun(Elevator elevator,Floor floor[14],Calling calling){
+    
+    while(1){
+        int CurrentFloor=elevator.GetFloor();
+        cout<<"当前电梯所在楼层为"<<elevator.GetFloor()<<endl;
+        int direction=elevator.getDirection();
+        if(direction==1){
+            cout<<"当前电梯的方向为上"<<endl;
+        }
+        else if(direction==2){
+            cout<<"当前电梯的方向为下"<<endl;
+        }
+        else{
+            cout<<"当前电梯的为静止"<<endl;
+        }
+        
+        for(int i=1;i<=14;i++){
+        if(floor[i].getPeopleNum()!=0){
+            calling.pushTargetFloor(i);
+        }
+    }
+    calling.sortedTargetFloor(CurrentFloor,direction);
+    cout<<"当前电梯的目标楼层为"<<calling.popTargetFloor()<<endl;
+    calling.CallingTravel();
+    int TargetFloor=calling.popTargetFloor();
 
-
+    //电梯上升
+    if(TargetFloor>CurrentFloor){
+        for(int i=CurrentFloor;i<=TargetFloor;i++){
+            elevator.SetFloor(i);
+            cout<<"当前电梯所在楼层为"<<elevator.GetFloor()<<endl;
+        }
+        elevator.addPeople(floor[TargetFloor-1].popPeople(),elevator.GetTargetFloor());
+        cout<<"当前电梯的人数为"<<elevator.GetPeopleNum()<<endl;
+        for(int i=0;i<elevator.GetPeopleNum();i++){
+            calling.pushTargetFloor(elevator.GetTargetFloor()[i].GetTargetFloor());
+        }
+        calling.sortedTargetFloor(CurrentFloor,direction);
+        cout<<"当前电梯的目标楼层为"<<calling.popTargetFloor()<<endl;
+        calling.CallingTravel();
+    }
+    //电梯下降
+    else if(TargetFloor<CurrentFloor){
+        for(int i=CurrentFloor;i>=TargetFloor;i--){
+            elevator.SetFloor(i);
+            cout<<"当前电梯所在楼层为"<<elevator.GetFloor()<<endl;
+        }
+        elevator.addPeople(floor[TargetFloor-1].popPeople(),elevator.GetTargetFloor());
+        cout<<"当前电梯的人数为"<<elevator.GetPeopleNum()<<endl;
+        for(int i=0;i<elevator.GetPeopleNum();i++){
+            calling.pushTargetFloor(elevator.GetTargetFloor()[i].GetTargetFloor());
+        }
+        calling.sortedTargetFloor(CurrentFloor,direction);
+        cout<<"当前电梯的目标楼层为"<<calling.popTargetFloor()<<endl;
+        calling.CallingTravel();
+    }
 }  
+
+
+}
 
 int main(){
     Elevator elevator;
     Floor floor[14];
+    Calling calling;
 
     for(int i=0;i<14;i++){
         floor[i].SetFloorNum(i+1);
@@ -33,17 +91,8 @@ int main(){
     for(int i=0;i<5;i++){
         floor[people[i].GetStartFloor()-1].pushPeople(people[i]);
     }
-     
     
-    
-    cout<<"当前电梯所在楼层为"<<elevator.GetFloor()<<endl;
-    cout<<"当前电梯的状态为"<<elevator.GetState()<<endl;
-    cout<<"当前电梯的人数为"<<elevator.GetPeopleNum()<<endl;
-    cout<<"当前电梯的方向为"<<elevator.getDirection()<<endl;
-    cout<<"当前电梯的目标楼层为"<<elevator.GetTargetFloor()[0].GetTargetFloor()<<endl;
-
-    
-    
+    elevatorRun(elevator,floor,calling);
 
     return 0;
 }
