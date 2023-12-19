@@ -37,4 +37,11 @@ int People::GetStartFloor() {
     return StartFloor;
 }
 
+/*
+int main(){
 
+    People people("1",1);
+    cout<<people.GetId()<<endl;
+    return 0;
+}
+*/
