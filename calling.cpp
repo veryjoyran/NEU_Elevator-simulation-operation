@@ -25,7 +25,7 @@ void Calling::sortedTargetFloor(int currentFloor,int direction) {
     //在电梯上升的情况下，先将比当前楼层大的楼层按从小到大放在前面，再将比当前楼层小的楼层按从大到小放在后面
     if(direction==1){
         for(int i=1;i<TargetfloorNum;i++){
-            for(int j=1;j<TargetfloorNum-i;j++){
+            for(int j=1;j<TargetfloorNum-i+1;j++){
                 if(GetElemAtIndex(j)<GetElemAtIndex(j+1)){
                     temp=GetElemAtIndex(j);
                     this->SetElemAtIndex(j,GetElemAtIndex(j+1));
@@ -33,9 +33,10 @@ void Calling::sortedTargetFloor(int currentFloor,int direction) {
                 }
             }
         }
-        for(int i=0;i<TargetfloorNum-1;i++){
-            for(int j=0;j<TargetfloorNum-1-i;j++){
-                if(GetElemAtIndex(j)>currentFloor){
+        CallingTravel();
+        for(int i=1;i<TargetfloorNum;i++){
+            for(int j=1;j<TargetfloorNum-i+1;j++){
+                if(GetElemAtIndex(j)>currentFloor&&GetElemAtIndex(j+1)>currentFloor){
                     if(GetElemAtIndex(j)>GetElemAtIndex(j+1)){
                         temp=GetElemAtIndex(j);
                         this->SetElemAtIndex(j,GetElemAtIndex(j+1));
@@ -48,8 +49,8 @@ void Calling::sortedTargetFloor(int currentFloor,int direction) {
 
     //在电梯下降的情况下，先将比当前楼层小的楼层按从大到小放在前面，再将比当前楼层大的楼层按从小到大放在后面
     else if(direction==2){
-        for(int i=0;i<TargetfloorNum-1;i++){
-            for(int j=0;j<TargetfloorNum-1-i;j++){
+        for(int i=1;i<TargetfloorNum;i++){
+            for(int j=1;j<TargetfloorNum-i+1;j++){
                 if(GetElemAtIndex(j)>GetElemAtIndex(j+1)){
                     temp=GetElemAtIndex(j);
                     this->SetElemAtIndex(j,GetElemAtIndex(j+1));
@@ -57,20 +58,25 @@ void Calling::sortedTargetFloor(int currentFloor,int direction) {
                 }
             }
         }
-        for(int i=0;i<TargetfloorNum-1;i++){
-            for(int j=0;j<TargetfloorNum-1-i;j++){
-                if(GetElemAtIndex(j)<currentFloor){
+        CallingTravel();
+        for(int i=1;i<TargetfloorNum;i++){
+            for(int j=1;j<TargetfloorNum-i+1;j++){
+                if(GetElemAtIndex(j)<currentFloor&&GetElemAtIndex(j+1)<currentFloor){
                     if(GetElemAtIndex(j)<GetElemAtIndex(j+1)){
                         temp=GetElemAtIndex(j);
                         this->SetElemAtIndex(j,GetElemAtIndex(j+1));
-                        this->SetElemAtIndex(j+1,temp);                   
-                        }
+                        this->SetElemAtIndex(j+1,temp);
                     }
                 }
             }
         }
-    }
 
+    }
+}
+
+void Calling::CallingTravel() {
+    this->TravalLinkList();
+}
 
 int main(){
 
@@ -80,9 +86,9 @@ int main(){
     calling.pushTargetFloor(4);
     calling.pushTargetFloor(2);
     calling.pushTargetFloor(10);
-    calling.TravalLinkList();
-    calling.sortedTargetFloor(5,1);
-    calling.TravalLinkList();
+    calling.CallingTravel();
+    calling.sortedTargetFloor(5,2);
+    calling.CallingTravel();
 
 
 
