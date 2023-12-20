@@ -31,7 +31,7 @@ public:
 
 private:
     int currentFloor;
-    int state;     //0表示电梯静止，1表示电梯上升，2表示电梯下降
+    int state;     //0表示电梯静止，1表示电梯上升，-1表示电梯下降，小于10正数和负数表示正在运行
     int peopleNum;
     int direction; //1表示电梯上升，2表示电梯下降
     People TargetFloor[MAXPEOPLE];
