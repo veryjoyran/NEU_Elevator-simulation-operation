@@ -12,6 +12,11 @@ void Calling::pushTargetFloor(int Targetfloor) {
     TargetfloorNum++;
 }
 
+int Calling::getDataTargetFloor()
+{
+    return GetElemAtIndex(1);
+}
+
 int Calling::popTargetFloor() {
     int temp=GetElemAtIndex(1);
     this->DeleteElemAtHead();
@@ -84,6 +89,34 @@ int Calling::GetTargetfloorNum() {
 
 int Calling::CallingGetElemAtIndex(int index) {
     return this->GetElemAtIndex(index);
+}
+
+int Calling::GetMaxTargetFloor()
+{
+    int max=0;
+    for(int i = 1; i <= TargetfloorNum; i++)
+    {
+        if(GetElemAtIndex(i)>max)
+        {
+            max=GetElemAtIndex(i);
+        }
+    }
+    return max;
+
+}
+
+int Calling::GetMinTargetFloor()
+{
+    int min=14;
+    for(int i = 1; i <= TargetfloorNum; i++)
+    {
+        if(GetElemAtIndex(i)<min)
+        {
+            min=GetElemAtIndex(i);
+        }
+    }
+    return min;
+
 }
 
 /*
