@@ -34,7 +34,7 @@ int elevatorRun(Elevator &elevator, Floor floor[14], Calling &calling)
             elevator.SetState(state - 5);
             elevator.SetFloor(CurrentFloor+1);
         }
-        else cout << "电梯上行中" << endl;
+        cout << "电梯上行中" << endl;
     }
     else if(TargetFloor < CurrentFloor)
     {
@@ -46,15 +46,15 @@ int elevatorRun(Elevator &elevator, Floor floor[14], Calling &calling)
             elevator.SetState(state + 5);
             elevator.SetFloor(CurrentFloor-1);
         }
-        else cout << "电梯下行中" << endl;
+        cout << "电梯下行中" << endl;
     }
     else  //电梯到达，上下乘客，更新判断
     {
+        elevator.SetState(0);
         calling.popTargetFloor();
         cout << "电梯到达，开门放人" << endl;
         CurrentFloor = elevator.GetFloor();
-        //将电梯中的人员排序,为后续删除做准备
-        elevator.sortedTargetFloor(CurrentFloor, direction, elevator.GetTargetFloor());
+        
         //到达目标楼层后，将需要下楼的人员从电梯中删除
         for(int i = 0; i<elevator.GetPeopleNum(); i++)
         {
@@ -79,30 +79,8 @@ int elevatorRun(Elevator &elevator, Floor floor[14], Calling &calling)
         }
 
         
-        cout << "当前电梯的人数为" << elevator.GetPeopleNum() << endl;
-        if(elevator.GetPeopleNum() == MAXPEOPLE && floor[TargetFloor-1].getPeopleNum() != 0)
-        {
-            cout << "电梯已满" << endl;
-            flag = CurrentFloor;
-        }
-        
-        direction=elevator.getDirection(calling, CurrentFloor);
-        cout << "电梯的方向为排队第一个人按到的位置：" << direction << endl;
-        //打印calling中的楼层
-        //将calling中的楼层按照逻辑进行排序
-        calling.sortedTargetFloor(CurrentFloor,direction);
 
-        cout << "calling中的楼层为" << endl;
-        if(calling.GetTargetfloorNum()!=0)
-        {
-            int i;
-            for( i = 1; i<=calling.GetTargetfloorNum(); i++)
-            {
-                cout << calling.CallingGetElemAtIndex(i) << " ";
-            }
-            cout << endl;
-        }
-
+        //在此处之前完成开关门的操作
         //判断是否完成运行，防止引发数组越界以及空指针异常
         //检查是否所有人员都已经送达
         bool allDelivered=true;
@@ -115,7 +93,46 @@ int elevatorRun(Elevator &elevator, Floor floor[14], Calling &calling)
             cout << "操作已经完成" << endl;
             flag = -1;
         }
-        else cout << "还有操作未完成" << endl;
+        else
+        {
+            cout << "还有操作未完成" << endl;
+            elevator.sortedTargetFloor(elevator.GetFloor(), elevator.getDirection(calling,elevator.GetFloor()), elevator.GetTargetFloor(), elevator.GetPeopleNum());
+        
+            cout << "当前电梯的人数为" << elevator.GetPeopleNum() << endl;
+            //当前电梯中的人员的目标楼层为
+            for(int i = 0; i < elevator.GetPeopleNum(); i++)
+            {
+                cout << elevator.GetTargetFloor()[i].GetTargetFloor() << " ";
+            }
+
+            if(elevator.GetPeopleNum() == MAXPEOPLE && floor[TargetFloor-1].getPeopleNum() != 0)
+            {
+                cout << "电梯已满" << endl;
+                flag = CurrentFloor;
+            }
+            
+            direction=elevator.getDirection(calling, CurrentFloor);
+            cout << "电梯的方向为排队第一个人按到的位置：" << direction << endl;
+            elevator.SetState(direction);
+            //打印calling中的楼层
+            //将calling中的楼层按照逻辑进行排序
+            calling.sortedTargetFloor(CurrentFloor,direction);
+
+            cout << "calling中的楼层为" << endl;
+            if(calling.GetTargetfloorNum()!=0)
+            {
+                int i;
+                for( i = 1; i<=calling.GetTargetfloorNum(); i++)
+                {
+                    cout << calling.CallingGetElemAtIndex(i) << " ";
+                }
+                cout << endl;
+            }
+
+        } 
+        
+
+        
     }
 
     return flag; //返回flag，判断是否需要继续运行 0表示正常运行，正数表示电梯已满需要其他电梯来相应，-1表示所有操作已完成
@@ -202,7 +219,7 @@ void runComputing()
     //按照时间进行运行
     int currentTime;
     int spareTime[4] = {0};
-    for(currentTime = 0; currentTime < 10000; currentTime++)
+    for(currentTime = 1; currentTime < 120; currentTime++)
     {
         int j = 0;
         People* temp = new People[100]; 
@@ -252,6 +269,7 @@ void runComputing()
                     temp[i]=temp[i+1];
                 }
                 j--;
+                l--;
             }
         }
         int totalPeople = j;
@@ -303,7 +321,7 @@ void runComputing()
                 }
             }
             //找到最短等待时间的电梯
-            //设置电梯的状态state
+            
             int lesstime = 280;
             int answerElevator = 0;
             for(int i = 3; i >= 0 ; i--)
@@ -315,7 +333,12 @@ void runComputing()
                 }
             }
             calling[answerElevator].pushTargetFloor(temp[i].GetStartFloor());
+            //设置电梯的状态state
             spareTime[answerElevator] = 0;
+            int elevatorState = 0;
+            if(temp[i].GetTargetFloor() - temp[i].GetStartFloor() > 0) elevatorState = 1;
+            else elevatorState = -1;
+            elevator[answerElevator].SetState(elevatorState);
             //缓存操作？
         }
 
@@ -324,24 +347,42 @@ void runComputing()
             if(spareTime[i] >= 10)
             {
                 calling[i].pushTargetFloor(1);
+                spareTime[i] = 0;
             }
         }
-        
+        cout << "当前时间为：" << currentTime << endl;
         int Listeningstate[4] = {0};
         for(int i = 0; i < 4; i++)
         {
+            cout << "电梯" << i+1 << "状态： ";
             if(calling[i].GetTargetfloorNum() != 0)
             {
+                
                 Listeningstate[i] = elevatorRun(elevator[i], floor, calling[i]);
                 if(Listeningstate[i] > 0 )
                 {
                     getPeopleFromfloor(people, currentTime+1, Listeningstate[i]);
-                    }
+                }
                 else if(Listeningstate[i] == -1)
                 {
                     spareTime[i]++;
+                    cout << "电梯" << i+1 << "在第" << elevator[i].GetFloor() << "层空闲" << spareTime[i] << "秒" << endl;
                 }
             }
+            else
+            {
+                if(elevator[i].GetFloor() !=1 )
+                {
+                    spareTime[i]++;
+                    cout << "电梯" << i+1 << "在第" << elevator[i].GetFloor() << "层空闲" << spareTime[i] << "秒" << endl;
+                }
+                else
+                {
+                    cout << "电梯" << i+1 << "空闲" << endl;
+                }
+                
+            }
+            
         }
         
         
