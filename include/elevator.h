@@ -24,7 +24,7 @@ public:
 
     void addPeople(People people,People* TargetFloor); //添加乘客
     void deletePeople(People* TargetFloor); //删除乘客
-    void sortedTargetFloor(int currentFloor,int direction,People* TargetFloor);
+    void sortedTargetFloor(int currentFloor,int direction,People* TargetFloor,int peopleNum); //对目标楼层进行排序
 
 
 

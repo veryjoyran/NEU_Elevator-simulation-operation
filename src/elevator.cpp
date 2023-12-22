@@ -71,7 +71,7 @@ void Elevator::setDirection(int direction) {
     this->direction=direction;
 }
 
-void Elevator::sortedTargetFloor(int currentFloor,int direction,People* TargetFloor) {
+void Elevator::sortedTargetFloor(int currentFloor,int direction,People* TargetFloor,int peopleNum) {
     People temp;
 
     //在电梯上升的情况下，先将比当前楼层大的楼层按从小到大放在前面，再将比当前楼层小的楼层按从大到小放在后面
@@ -87,7 +87,7 @@ void Elevator::sortedTargetFloor(int currentFloor,int direction,People* TargetFl
         }
         for(int i=0;i<peopleNum-1;i++){
             for(int j=0;j<peopleNum-1-i;j++){
-                if(TargetFloor[j].GetTargetFloor()>currentFloor){
+                if(TargetFloor[j].GetTargetFloor()>currentFloor&&TargetFloor[j+1].GetTargetFloor()>currentFloor){
                     if(TargetFloor[j].GetTargetFloor()>TargetFloor[j+1].GetTargetFloor()){
                         temp=TargetFloor[j];
                         TargetFloor[j]=TargetFloor[j+1];
@@ -111,7 +111,7 @@ void Elevator::sortedTargetFloor(int currentFloor,int direction,People* TargetFl
         }
         for(int i=0;i<peopleNum-1;i++){
             for(int j=0;j<peopleNum-1-i;j++){
-                if(TargetFloor[j].GetTargetFloor()<currentFloor){
+                if(TargetFloor[j].GetTargetFloor()<currentFloor&&TargetFloor[j+1].GetTargetFloor()<currentFloor){
                     if(TargetFloor[j].GetTargetFloor()<TargetFloor[j+1].GetTargetFloor()){
                         temp=TargetFloor[j];
                         TargetFloor[j]=TargetFloor[j+1];
