@@ -44,7 +44,7 @@ void singleElevatorRun(Elevator &elevator,Floor floor[14],Calling &calling){
         CurrentFloor=elevator.GetFloor();
         //将电梯中的人员排序,为后续删除做准备
         elevator.sortedTargetFloor(elevator.GetFloor(), direction, elevator.GetTargetFloor(), elevator.GetPeopleNum());
-        
+
         //到达目标楼层后，将需要下楼的人员从电梯中删除
         for(int i=0;i<elevator.GetPeopleNum();i++){
             if(elevator.GetTargetFloor()[i].GetTargetFloor()==CurrentFloor){
@@ -559,6 +559,7 @@ void runComputing()
             
             
         }
+        //去除重复的楼层
         int aim[14] = {0};
         for(int l = 0; l < j; l++)
         {
@@ -729,50 +730,50 @@ void runComputing()
 }
 
 
-// int main(){
-//     runComputing();
-
-//     return 0;
-// }
-
-
-//单部电梯测试主函数
 int main(){
-    Elevator elevator;
-    Floor floor[14];
-    Calling calling;
-
-    for(int i=0;i<14;i++){
-        floor[i].SetFloorNum(i+1);
-    }
-    //初始化人员
-    People people[5];
-    people[0].SetTargetFloor(5);
-    people[1].SetTargetFloor(3);
-    people[2].SetTargetFloor(7);
-    people[3].SetTargetFloor(9);
-    people[4].SetTargetFloor(11);
-
-    people[0].SetStartFloor(4);
-    people[1].SetStartFloor(4);
-    people[2].SetStartFloor(4);
-    people[3].SetStartFloor(4);
-    people[4].SetStartFloor(2);
-    //初始化楼层
-    for(int i=0;i<5;i++){
-        floor[people[i].GetStartFloor()-1].pushPeople(people[i]);
-    }
-
-    //将需要响应的楼层传给calling
-    for(int i=0;i<14;i++){
-        if(floor[i].getPeopleNum()!=0){
-            calling.pushTargetFloor(i+1);
-        }
-    }
-    int CurrentFloor=elevator.GetFloor();
-    cout<<"方向为"<<elevator.getDirection(calling,CurrentFloor)<<endl;
-    //电梯运行逻辑
-    singleElevatorRun(elevator,floor,calling);
+    runComputing();
 
     return 0;
 }
+
+
+// //单部电梯测试主函数
+// int main(){
+//     Elevator elevator;
+//     Floor floor[14];
+//     Calling calling;
+
+//     for(int i=0;i<14;i++){
+//         floor[i].SetFloorNum(i+1);
+//     }
+//     //初始化人员
+//     People people[5];
+//     people[0].SetTargetFloor(5);
+//     people[1].SetTargetFloor(3);
+//     people[2].SetTargetFloor(7);
+//     people[3].SetTargetFloor(9);
+//     people[4].SetTargetFloor(11);
+
+//     people[0].SetStartFloor(4);
+//     people[1].SetStartFloor(4);
+//     people[2].SetStartFloor(4);
+//     people[3].SetStartFloor(4);
+//     people[4].SetStartFloor(2);
+//     //初始化楼层
+//     for(int i=0;i<5;i++){
+//         floor[people[i].GetStartFloor()-1].pushPeople(people[i]);
+//     }
+
+//     //将需要响应的楼层传给calling
+//     for(int i=0;i<14;i++){
+//         if(floor[i].getPeopleNum()!=0){
+//             calling.pushTargetFloor(i+1);
+//         }
+//     }
+//     int CurrentFloor=elevator.GetFloor();
+//     cout<<"方向为"<<elevator.getDirection(calling,CurrentFloor)<<endl;
+//     //电梯运行逻辑
+//     singleElevatorRun(elevator,floor,calling);
+
+//     return 0;
+// }
