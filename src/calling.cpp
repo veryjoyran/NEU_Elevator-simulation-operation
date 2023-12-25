@@ -119,21 +119,3 @@ int Calling::GetMinTargetFloor()
 
 }
 
-/*
-int main(){
-
-    Calling calling;
-    calling.pushTargetFloor(1);
-    calling.pushTargetFloor(8);
-    calling.pushTargetFloor(4);
-    calling.pushTargetFloor(2);
-    calling.pushTargetFloor(10);
-    calling.CallingTravel();
-    calling.sortedTargetFloor(5,2);
-    calling.CallingTravel();
-
-
-
-    return 0;
-}
-*/
