@@ -730,11 +730,12 @@ void runComputing()
 }
 
 
-int main(){
-    runComputing();
+//主程序
+// int main(){
+//     runComputing();
 
-    return 0;
-}
+//     return 0;
+// }
 
 
 // //单部电梯测试主函数
@@ -777,3 +778,128 @@ int main(){
 
 //     return 0;
 // }
+
+
+//链表测试函数
+
+// int main()
+// {
+//     LinkList<int> l;
+//     int i;
+//     cout << "1.创建单链表   2.遍历单链表   3.获取单链表的长度   4.判断单链表是否为空   5.获取节点\n";
+//     cout << "6.在尾部插入指定元素   7.在指定位置插入指定元素   8.在头部插入指定元素\n";
+//     cout<<"9.在尾部删除元素   10.删除所有元素   11.删除指定元素   12.在头部删除元素  13.获取指定下标的数据  14. 设置指定下标的数据 0.退出" << endl;
+//     do
+//     {
+//         cout << "请输入要执行的操作: ";
+//         cin >> i;
+//         switch (i)
+//         {
+//         case 1:
+//             int n;
+//             cout << "请输入单链表的长度: ";
+//             cin >> n;
+//             l.CreateLinkList(n);
+//             break;
+//         case 2:
+//             l.TravalLinkList();
+//             break;
+//         case 3:
+//             cout << "该单链表的长度为" << l.GetLength() << endl;
+//             break;
+//         case 4:
+//             if (l.IsEmpty() == 1)
+//                 cout << "该单链表是空表" << endl;
+//             else
+//             {
+//                 cout << "该单链表不是空表" << endl;
+//             }
+//             break;
+//         case 5:
+//             int data;
+//             cout << "请输入要获取节点: ";
+//             cin >> data;
+//             cout << "该节点的位置为" << l.FindNodePosition(data) << endl;
+//             break;
+//         case 6:
+//             int endData;
+//             cout << "请输入要在尾部插入的值: ";
+//             cin >> endData;
+//             l.InsertElemAtEnd(endData);
+//             break;
+//         case 7:
+//             int pointData;
+//             int index;
+//             cout << "请输入要插入的数据: ";
+//             cin >> pointData;
+//             cout << "请输入要插入数据的位置: ";
+//             cin >> index;
+//             l.InsertElemAtIndex(pointData, index);
+//             break;
+//         case 8:
+//             int headData;
+//             cout << "请输入要在头部插入的值: ";
+//             cin >> headData;
+//             l.InsertElemAtHead(headData);
+//             break;
+//         case 9:
+//             l.DeleteElemAtEnd();
+//             break;
+//         case 10:
+//             l.DeleteAll();
+//             break;
+//         case 11:
+//             int pointDeleteData;
+//             cout << "请输入要删除的数据: ";
+//             cin >> pointDeleteData;
+//             l.DeleteElemAtPoint(pointDeleteData);
+//             break;
+//         case 12:
+//             l.DeleteElemAtHead();
+//             break;
+//         case 13:
+//             int indexData;
+//             cout << "请输入要获取的下标: ";
+//             cin >> indexData;
+//             cout << "该下标的数据为" << l.GetElemAtIndex(indexData) << endl;
+//             break;
+//         case 14:
+//             int indexSetData;
+//             int setData;
+//             cout << "请输入要设置的下标: ";
+//             cin >> indexSetData;
+//             cout << "请输入要设置的数据: ";
+//             cin >> setData;
+//             l.SetElemAtIndex(indexSetData,setData);
+//             break;
+//         default:
+//             break;
+//         }
+//     }while (i != 0);
+ 
+//     system("pause");
+//     return 0;
+// }
+
+//calling测试函数
+
+// int main(){
+
+//     Calling calling;
+//     calling.pushTargetFloor(1);
+//     calling.pushTargetFloor(8);
+//     calling.pushTargetFloor(4);
+//     calling.pushTargetFloor(2);
+//     calling.pushTargetFloor(10);
+//     cout<<"calling中的楼层为"<<endl;
+//     calling.CallingTravel();
+//     cout<<"排序后的calling中的楼层为"<<endl;
+//     calling.sortedTargetFloor(5,2);
+//     calling.CallingTravel();
+//     cout<<"删除第一个数据后calling中的楼层为："<<endl;
+//     calling.popTargetFloor();
+//     calling.CallingTravel();
+
+//     return 0;
+// }
+
